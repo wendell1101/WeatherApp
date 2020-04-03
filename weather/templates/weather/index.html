@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherApp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        nav{
+            height:10vh;
+        }
+        body{
+            background: rgb(238, 235, 235);
+            overflow-x:hidden;
+        }
+        input{
+            width:82%;
+            height:40px;
+            margin-bottom:1rem;
+            padding: .75rem 1.25rem;
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,.125);
+        }
+    
+        .add-btn{
+            width:100px!important;
+        }
+        .main{
+            padding:2rem;
+            background:#343a40;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-info navbar-expand-sm mb-3">
+        <a href="{% url 'index' %}" class="navbar-brand ml-3">WeatherApp</a>
+        <button type="submit" class="navbar-toggler" data-toggle="collapse" data-target="#navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto mr-5">
+                <li class="nav-item active"><a class="nav-link">Check Weather Condition in your City!</a></li>
+            </ul>   
+        </div>
+    </nav>
+    <div class="row">
+       
+        <div class="col-md-5 m-auto main">
+            <form method="POST">
+                {% csrf_token %}
+                {{form.name}}
+            <button type="submit" class="btn btn-info add-btn">Add City</button>
+            </form>
+            <ul class="list-group">
+                
+                {% for city_weather in weather_data %}
+                    <li class="list-group-item  mb-3">
+                    
+                    
+                            <img src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" alt=""><br>
+                            <small class="text-muted">City Name: </small><span class="text-center text-uppercase font-weight-bold">{{city_weather.city}}</span>     <br>
+                            <span class="font-weight-light"><small class="text-muted">Temperature: </small>{{city_weather.temperature}} Celcius</span><br>
+                            <p class="font-weight-italic"><small class="text-muted">Description: </small>{{city_weather.description}}</p>
+                    
+                    </li>
+                 {% endfor %}
+            </ul>
+            
+        </div>
+    </div>
+  
+</body>
+</html>
